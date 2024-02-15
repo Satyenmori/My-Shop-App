@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -112,6 +113,7 @@ export default function Cart() {
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
               or{" "}
+              <Link to="/">
               <button
                 type="button"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -120,6 +122,7 @@ export default function Cart() {
                 Continue Shopping
                 <span aria-hidden="true"> &rarr;</span>
               </button>
+              </Link>
             </p>
           </div>
         </div>
