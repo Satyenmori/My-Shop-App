@@ -1,5 +1,8 @@
 import express from "express";
-import { createProduct, fetchProductById } from "../controller/Prodcut.js";
+import { createProduct, fetchAllProduct, fetchProductById } from "../controller/Prodcut.js";
 export const productRouter = express.Router();
 
-productRouter.post("/", createProduct).get("/:id", fetchProductById);
+productRouter
+  .post("/", createProduct)
+  .get("/:id", fetchProductById)
+  .get("/", fetchAllProduct);

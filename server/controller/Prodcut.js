@@ -21,3 +21,14 @@ export const fetchProductById = async (req, res) => {
     res.status(200).json(error);
   }
 };
+
+// fetch All Product 
+
+export const fetchAllProduct=async(req,res)=>{
+  try {
+    const product= await Product.find({})
+    res.status(200).json(product)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
