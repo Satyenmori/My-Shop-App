@@ -47,14 +47,6 @@ function SignUp() {
                 >
                   Password
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -103,7 +95,8 @@ function SignUp() {
               to="/login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              {" "}Login
+              {" "}
+              Login
             </Link>
           </p>
         </div>
