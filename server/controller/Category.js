@@ -9,3 +9,12 @@ export const addCategory = async (req, res) => {
     res.status(500).json("Category Not add ", error);
   }
 };
+
+export const fetchCategory = async (req, res) => {
+  try {
+    const categories = await Category.find({});
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(500).json("categories not Find", error);
+  }
+};

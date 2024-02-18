@@ -12,7 +12,14 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 
-import { fetchAllProductAsync, selectAllProducts } from "../productSlice";
+import {
+  fetchAllProductAsync,
+  fetchBrandAsync,
+  fetchCategoryAsync,
+  selectAllProducts,
+  selectBrands,
+  selectCategories,
+} from "../productSlice";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -22,44 +29,42 @@ const sortOptions = [
   { name: "Price: High to Low", href: "#", current: false },
 ];
 
-const filters = [
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
-    ],
-  },
-  {
-    id: "brand",
-    name: "Brand",
-    options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
-    ],
-  },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 function ProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const products = useSelector(selectAllProducts);
   const dispatch = useDispatch();
+  const products = useSelector(selectAllProducts);
+  const categories = useSelector(selectCategories);
+  const brands = useSelector(selectBrands);
+
+  const filters = [
+    {
+      id: "category",
+      name: "Category",
+      options: categories,
+    },
+    {
+      id: "brand",
+      name: "Brand",
+      options: brands,
+    },
+  ];
+
+  const handlFilter = (e, section, option) => {
+    console.log(section.id, option.value);
+  };
 
   useEffect(() => {
     dispatch(fetchAllProductAsync());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchCategoryAsync());
+    dispatch(fetchBrandAsync());
+  }, []);
 
   return (
     <div className="bg-white">
@@ -108,7 +113,7 @@ function ProductList() {
                     </button>
                   </div>
 
-                  {/* Filters */}
+                  {/* Mobile Filters */}
                   <form className="mt-4 border-t border-gray-200">
                     {filters.map((section) => (
                       <Disclosure
@@ -151,6 +156,9 @@ function ProductList() {
                                       defaultValue={option.value}
                                       type="checkbox"
                                       defaultChecked={option.checked}
+                                      onChange={(e) =>
+                                        handlFilter(e, section, option)
+                                      }
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
                                     <label
@@ -250,7 +258,7 @@ function ProductList() {
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
-              {/* Filters */}
+              {/* Desktop Filters */}
               <form className="hidden lg:block">
                 {filters.map((section) => (
                   <Disclosure
@@ -293,6 +301,9 @@ function ProductList() {
                                   defaultValue={option.value}
                                   type="checkbox"
                                   defaultChecked={option.checked}
+                                  onChange={(e) =>
+                                    handlFilter(e, section, option)
+                                  }
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
